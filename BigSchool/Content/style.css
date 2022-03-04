@@ -1,0 +1,135 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200');
+
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+/* Override the default bootstrap Nar bar by */
+/*Màu của thanh bar*/
+.navbar-inverse {
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 24%, rgba(5,103,183,1) 52%, rgba(2,165,224,0.9643207624846813) 69%, rgba(1,187,238,1) 81%, rgba(0,212,255,1) 100%);
+    /* background-color: #d41d50;
+    border-color: #fbf6f6;*/
+}
+
+    .navbar-inverse .navbar-nav > li > a {
+        color: white;
+    }
+
+    .navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav {
+        color: white;
+    }
+
+ /*Course date*/
+
+ /*Animation Background*/
+body {
+    background-image: url('https://static.pexels.com/photos/414171/pexels-photo-414171.jpeg');
+    background-size: cover;
+    -webkit-animation: slidein 200s;
+    animation: slidein 200s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    animation-direction: alternate;
+
+}
+
+@-webkit-keyframes slidein {
+    from {
+        background-position: top;
+        background-size: 3000px;
+    }
+
+    to {
+        background-position: -100px 0px;
+        background-size: 2750px;
+    }
+}
+
+@keyframes slidein {
+    from {
+        background-position: top;
+        background-size: 3000px;
+    }
+
+    to {
+        background-position: -100px 0px;
+        background-size: 2750px;
+    }
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(75, 75, 250, 0.3);
+    border-radius: 3px;
+    color: white;
+}
+
+    .center h1 {
+        text-align: center;
+        color: white;
+        font-family: 'Source Code Pro', monospace;
+        text-transform: uppercase;
+    }
+
+
+
+/* action 
+
+table > js-toggle-attendance, js-tongle-follow .action {
+    display: none;
+    left: 70px;
+    position: absolute;
+    color: azure;
+}
+
+table > js-toggle-attendance:hover .action {
+    display: block;
+}*/
+.course > li .action {
+    display: none;
+    left: 70px;
+    position: absolute;
+}
+
+.course > li:hover .action {
+    display: block;
+}
+
+.footer {
+    color: white;
+
+}
+

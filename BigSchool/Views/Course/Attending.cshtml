@@ -1,0 +1,57 @@
+﻿@model IEnumerable<BigSchool.Models.Course>
+
+@{
+    ViewBag.Title = "Attending";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Các khóa học đã đăng kí</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Người hướng dẫn
+        </th>
+        <th>
+            Thời gian
+        </th>
+        <th>
+            Địa điểm
+        </th>
+        <th>
+            Khóa học
+        </th>
+        
+    </tr>
+
+    @foreach (var Course in Model)
+    {
+        <tr>
+            <td>@Course.Name</td>
+            <td>
+                @*@Course.DateTime.ToString("dd/MM/yyyy HH:mm")*@
+                <div @**@style="text-align:center; background: rgb(2,0,36);
+                            background: linear-gradient(302deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 14%, 
+                            rgba(5,103,183,1) 38%, rgba(2,165,224,0.9643207624846813) 62%, 
+                            rgba(140,209,228,1) 94%, rgba(1,187,238,1) 100%, rgba(0,212,255,1) 100%);
+                            color: white; width: 60px; border-radius: 8px;
+                            border-style:solid" class="date">
+                    <div class="month">@Course.DateTime.Value.ToString("dd") - @Course.DateTime.Value.ToString("MM")</div>
+                    <div class="year">@Course.DateTime.Value.ToString("yyyy")</div>
+                    <div class="day"></div>
+                </div>
+            </td>
+            <td>@Course.Place</td>
+            <td>@Course.Category.CategoryName</td>  
+            @**@
+            @*<td>
+                <a href="@Url.Action("Buy", "Home",
+                      new {id = Course.CourseId})" class="btn btn-primary">Tham gia</a>
+                    <li class="course"></li>
+                <button data-course-id="@Course.CourseId" class="btn btn-default btn-sm js-toggle-attendance">Đăng ký?</button>
+
+            </td>*@
+        </tr>
+    }
+</table>

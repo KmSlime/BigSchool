@@ -1,0 +1,193 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<h2 style="margin-top:100px">Hallo, chào mừng bạn tới đây!! Nhớ kết bạn fb mình nhé :'></h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Người hướng dẫn
+        </th>
+        <th>
+            Thời gian
+        </th>
+        <th>
+            Địa điểm
+        </th>
+        <th>
+            Khóa học
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var Course in Model)
+    {
+        
+        <tr>
+            <td>@Course.Name</td>
+            <td>
+                @*@Course.DateTime.ToString("dd/MM/yyyy HH:mm")*@
+                    <div style="text-align:center; background: rgb(2,0,36);
+                            background: radial-gradient(circle, rgba(2,0,36,1) 0%, 
+                            rgba(9,9,121,1) 14%, rgba(5,103,183,1) 38%, rgba(2,165,224,0.9643207624846813) 62%, 
+                            rgba(140,209,228,1) 94%, rgba(1,187,238,1) 100%, rgba(0,212,255,1) 100%);
+                            color: white; width: 60px; border-radius: 8px;
+                            border-style:solid" class="date">
+                    <div class="month">@Course.DateTime.ToString("dd") - @Course.DateTime.ToString("MM")</div>
+                    <div class="year">@Course.DateTime.ToString("yyyy")</div>
+                    <div class="day"></div>
+                </div>
+            </td>
+            <td>@Course.Place</td>
+            <td>@Course.Category.CategoryName</td>
+            @**@
+            <td>
+                <ul class="course">
+                    @*<a href="@Url.Action("Buy", "Home",
+                      new {id = Course.CourseId})" class="btn btn-primary">Tham gia</a>
+                    <li class="course"></li>*@
+                    <li>
+                        @if (Course.isLogin)
+                        {
+                            if (Course.isShowGoing)
+                            {
+                                <button style="background: rgb(48,81,250); background: radial-gradient(circle,
+                            rgba(48,81,250,0.7262255243894433) 5%, rgba(144,214,218,1) 46%,
+                            rgba(190,198,149,1) 78%); border-radius: 20px; border-style:hidden"
+                                        data-course-id="@Course.CourseId"
+                                        class="btn btn-default btn-sm js-toggle-attendance">
+                                    Đăng ký?
+                                </button>
+                            }
+                            else
+                            {
+                                <button style="background: rgb(48,81,250); background: radial-gradient(circle,
+                            rgba(48,81,250,0.7262255243894433) 5%, rgba(144,214,218,1) 46%,
+                            rgba(190,198,149,1) 78%); border-radius: 20px; border-style:hidden"
+                                        data-course-id="@Course.CourseId"
+                                        class="btn btn-default btn-sm js-toggle-attendance">
+                                    Đã đăng ký!
+                                </button>
+                            }
+                        }
+                    </li>
+                    @*<p> </p>*@
+                    <li>
+                        @if (Course.isLogin)
+                        {
+                            if (Course.isShowFollow)
+                            {
+                                <button style="background: rgb(34,193,195); background: linear-gradient(0deg,
+                                   rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%); border-radius: 20px;"
+                                        data-user-id="@Course.LecturerId"
+                                        class="btn btn-default btn-sm js-toggle-follow">
+                                    Theo dõi?
+                                </button>
+                            }
+                            else
+                            {
+                                <button style="background: rgb(34,193,195); background: linear-gradient(0deg,
+                                   rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%); border-radius: 20px;"
+                                        data-user-id="@Course.LecturerId"
+                                        class="btn btn-default btn-sm js-toggle-follow">
+                                    Đã theo dõi!
+                                </button>
+                            }
+                        }
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    }
+</table>
+
+<!--Ajax-->
+@section scripts{
+    <script>
+        $(function ()
+        {
+            $('.js-toggle-attendance').click(function (e) {
+                var button = $(e.target);
+                $.post("/api/attendance", { CourseId: button.attr("data-course-id") }).done(function (result) {
+                    if (result == "Cancel") {
+                        alert("Đã hủy khóa học thành công!")
+                        button
+                            .removeClass("btn-info")
+                            .addClass("btn-default")
+                            .text("Đăng ký?");
+                    } else {
+                        alert("Đăng ký thành công!")
+                        button
+                            .removeClass("btn-default")
+                            .addClass("btn-info")
+                            .text("Đã đăng ký!");
+                    }
+                }).fail(function () {
+                    alert("Có gì đó ko ổn!");
+                });
+            });
+
+
+            $('.js-toggle-follow').click(function (e) {
+                var button = $(e.target);
+                var followee = button.attr("data-user-id");
+                $.post("/API/Following", { FolloweeId: button.attr("data-user-id") }).done(function (result) {
+                    if (result == "cancel") {
+                        $('.js-tongle-follow').each(function (i, obj) {
+                            if ($(this).attr('data-user-id') == followee) {
+                                $(this)
+                                    .removeClass("btn-info")
+                                    .addClass("btn-default")
+                                    .text("Theo dõi?");
+                            }
+                        });
+                        alert("Hủy theo dõi thành công")
+                    } else {
+                        $('.js-tongle-follow').each(function (i, obj) {
+                            if ($(this).attr('data-user-id') == followee) {
+                                $(this)
+                                    .removeClass("btn-default")
+                                    .addClass("btn-success")
+                                    .text("Đã theo dõi!");
+                            }
+                        });
+                        alert("Thực hiện thành công!")
+                    }
+                }).fail(function (errormessage) {/*"Ko ổn rồi bạn ei!"*/
+                    alert(errormessage.responseJSON.Message);
+                    });
+            });
+        });
+    </script>
+}
+
+@*<div class="jumbotron">
+        <h1>ASP.NET</h1>
+        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+        <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    </div>
+
+
+
+    <div class="row">
+            <div class="col-md-4">
+                <h2>Getting started</h2>
+                <p>
+                    ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+                    enables a clean separation of concerns and gives you full control over markup
+                    for enjoyable, agile development.
+                </p>
+                <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Get more libraries</h2>
+                <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+                <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Web Hosting</h2>
+                <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+                <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+            </div>
+        </div>*@

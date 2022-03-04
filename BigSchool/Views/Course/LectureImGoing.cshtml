@@ -1,0 +1,61 @@
+﻿@model IEnumerable<BigSchool.Models.Course>
+
+@{
+    ViewBag.Title = "LectureIamGoing";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Khóa học yêu thích</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Người hướng dẫn
+        </th>
+        <th>
+            Thời gian
+        </th>
+        <th>
+            Địa điểm
+        </th>
+        <th>
+            Khóa học
+        </th>
+
+    </tr>
+
+    @foreach (var Course in Model)
+    {
+        <tr>
+            <td>@Course.Name</td>
+            <td>
+                @*@Course.DateTime.ToString("dd/MM/yyyy HH:mm")*@
+                <div style="text-align: center; background: rgb(58,180,62); 
+                    background: linear-gradient(240deg, rgba(58,180,62,0.9363095580028886) 1%, 
+                    rgba(253,228,29,0.8074580173866421) 50%, rgba(252,84,69,1) 100%); 
+                    color: white; width: 60px; border-radius: 8px; border-style: solid " class="date">
+                    <div class="month">@Course.DateTime.Value.ToString("dd") - @Course.DateTime.Value.ToString("MM")</div>
+                    <div class="year">@Course.DateTime.Value.ToString("yyyy")</div>
+                    <div class="day"></div>
+                </div>
+            </td>
+            <td>@Course.Place</td>
+            <td>@Course.Category.CategoryName</td>
+
+            @*<td>
+                    <a href="@Url.Action("Buy", "Home",
+                          new {id = Course.CourseId})" class="btn btn-primary">Tham gia</a>
+                        <li class="course"></li>
+                    <button data-course-id="@Course.CourseId" class="btn btn-default btn-sm js-toggle-attendance">Đăng ký?</button>
+
+                </td>*@
+        </tr>
+        @*<td>
+                @Html.ActionLink("Create New", "Create")
+                @Html.ActionLink("Edit", "Edit", new { id=item.CourseId }) |
+                @Html.ActionLink("Details", "Details", new { id=item.CourseId }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.CourseId })
+            </td>*@
+    }
+
+</table>

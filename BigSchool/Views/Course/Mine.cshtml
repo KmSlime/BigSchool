@@ -1,0 +1,56 @@
+﻿@model IEnumerable<BigSchool.Models.Course>
+
+@{
+    ViewBag.Title = "Mine";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Các khóa học của tôi</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Người hướng dẫn
+        </th>
+        <th>
+            Thời gian
+        </th>
+        <th>
+            Địa điểm
+        </th>
+        <th>
+            Khóa học
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var Course in Model)
+    {
+        <tr>
+            <td>@Course.Name</td>
+            <td>
+                @*@Course.DateTime.ToString("dd/MM/yyyy HH:mm")*@
+                <div style="text-align:center; background: rgb(34,193,195); background: linear-gradient(0deg,
+                                   rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+                            color: white; width: 60px; border-radius: 8px;
+                            border-style:solid" class="date">
+                    <div class="month">@Course.DateTime.Value.ToString("dd") - @Course.DateTime.Value.ToString("MM")</div>
+                    <div class="year">@Course.DateTime.Value.ToString("yyyy")</div>
+                    <div class="day"></div>
+                </div>
+            </td>
+            <td>@Course.Place</td>
+            <td>@Course.Category.CategoryName</td>
+            @* <li class="course"></li>*@
+           <td>
+               <div class="action">
+                   @Html.ActionLink("Sửa", "Edit", new { id = Course.CourseId }) | 
+                   @Html.ActionLink("Xóa", "Delete", new { id = Course.CourseId }) 
+                   @*<a href="#">sửa</a>
+                   <a href="#">xóa</a>
+                   <button class="btn btn-default" href="@Url.Action("Edit", "Course", new {id = Course.CourseId})">Sửa</button>
+                   <button class="btn btn-default" href="@Url.Action("Delete", "Course", new {id = Course.CourseId})">Xóa</button>*@
+               </div>
+           </td>
+        </tr>
+    }
+</table>
